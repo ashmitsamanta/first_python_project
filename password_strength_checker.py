@@ -9,9 +9,7 @@ passwords outright.
 import getpass
 from string import punctuation
 
-# Sample only. For real use, check against a proper breached-password
-# corpus (e.g. Have I Been Pwned's Pwned Passwords list) instead of a
-# hardcoded set -- this list is illustrative, not exhaustive.
+
 COMMON_PASSWORDS = {
     "password", "password1", "password123", "123456", "12345678",
     "qwerty", "qwerty123", "letmein", "admin", "welcome",
