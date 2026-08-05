@@ -19,10 +19,7 @@ COMMON_PASSWORDS = {
 
 
 def check_password_strength(password):
-    """
-    Pure logic, no I/O -- testable on its own.
-    Returns (score: int, max_score: int, reasons: list[str]).
-    """
+    
     reasons = []
     score = 0
     max_score = 7  # 3 for length + 4 for digit/upper/lower/special
