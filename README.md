@@ -1,13 +1,14 @@
 # first_python_projects
-This repositorie contains my first Python programs — small, functional scripts I wrote while learning the basics.
 
-#1.Password Strength Checker
+This repository contains my first Python programs — small, functional scripts I wrote while learning the basics.
 
-A command-line Python tool that scores password strength based on length,
-character variety, predictability, and membership in a common-password list.
+---
 
+## 1. Password Strength Checker
 
-## How it works
+A command-line Python tool that scores password strength based on length, character variety, predictability, and membership in a common-password list.
+
+### How it works
 
 - **Common-password check (instant fail):** if the password matches an
   entry in a known-weak list, it scores 0 and stops there — no partial
@@ -22,7 +23,7 @@ character variety, predictability, and membership in a common-password list.
 - **Rating:** score ÷ max score (7) → `STRONG` (≥85%), `MEDIUM` (≥50%),
   or `TOO WEAK` (below that).
 
-## Usage
+### Usage
 
 ```bash
 python3 password_strength_checker.py
@@ -41,10 +42,52 @@ Enter your password:
 REMARKS -- Password is MEDIUM (4/7)
 ```
 
-## Requirements
+### Requirements
 
 Python 3.6+, standard library only (`getpass`, `string`). No external
 dependencies.
 
+---
 
+## 2. Snake, Water, Gun Game
 
+A CLI variation of Rock-Paper-Scissors. Snake beats water, water beats gun, gun beats snake.
+
+### How it works
+
+The win logic is driven by a lookup dictionary instead of a chain of `if/elif` statements:
+
+```python
+beats = {1: -1, -1: 0, 0: 1}  # key beats value
+```
+
+Each entry encodes one rule (e.g. `1: -1` means snake beats water). A result is checked with a single lookup — `beats[computer] == you` — rather than six separate hand-written comparisons for every possible matchup. An earlier version used six manual branches and had two of them transposed (snake vs. gun was backwards) without it being obvious from reading the code — the lookup-dict version removes that entire class of bug.
+
+- Input is validated in a loop — invalid entries re-prompt instead of crashing.
+- Score (wins / losses / draws) is tracked across rounds and printed at the end.
+- The game repeats until the player chooses not to play again.
+
+### Usage
+
+```bash
+python3 snake_water_gun.py
+```
+
+**Example:**
+
+```
+Enter Your Choice (s/w/g): s
+
+You chose snake
+Computer chose gun
+You lose!
+
+Play again? (y/n): n
+
+Final Score — Wins: 0, Losses: 1, Draws: 0
+Thank you! Hope you enjoyed
+```
+
+### Requirements
+
+Python 3, standard library only (`random`). No external dependencies.
