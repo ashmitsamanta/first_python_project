@@ -112,10 +112,10 @@ The script communicates with an external REST API, parses the JSON response, and
 ### Usage
 
 ```bash
-# Run with a specific city via command line argument
+
 python weather_app.py Tokyo
 
-# Or run without arguments to be prompted
+
 python weather_app.py
 
 ### Example
