@@ -93,3 +93,48 @@ Thank you! Hope you enjoyed
 ### Requirements
 
 Python 3, standard library only (`random`). No external dependencies.
+
+---
+
+## 3. Terminal Weather App 🌦️
+
+A command-line tool that fetches real-time weather data for any city using the OpenWeatherMap API.
+
+### How it works
+
+The script communicates with an external REST API, parses the JSON response, and renders a stylized dashboard in the terminal.
+
+- **API Integration:** Uses the `requests` library to securely pass parameters and handle potential network timeouts or bad status codes.
+- **Environment Variables:** Keeps the private API key secure by loading it from a local `.env` file via `python-dotenv` instead of hardcoding it.
+- **Rich UI:** Leverages the `rich` library to replace standard prints with colorful, formatted panels and text tags (e.g., `[bold cyan]`).
+- **CLI Arguments:** Uses `sys.argv` to allow users to pass the city directly in the execution command, falling back to an `input()` prompt if omitted.
+
+### Usage
+
+```bash
+# Run with a specific city via command line argument
+python weather_app.py Tokyo
+
+# Or run without arguments to be prompted
+python weather_app.py
+
+### Example
+
+```text
+$ python weather_app.py London
+
+Fetching weather data for London...
+
+╭────────────────── 🌍 Weather in London ──────────────────╮
+│                                                          │
+│ 🌡️  Temperature: 15.2°C (Feels like 14.5°C)              │
+│ ☁️  Condition:   Overcast Clouds                         │
+│ 💧 Humidity:    72%                                      │
+│                                                          │
+╰──────────────────────────────────────────────────────────╯
+
+
+### Requirements
+
+Python 3.6+. External dependencies: `requests`, `python-dotenv`, and `rich` (Install via `pip install -r requirements.txt`). 
+*Note: Requires a free OpenWeatherMap API key saved in a local `.env` file.*
