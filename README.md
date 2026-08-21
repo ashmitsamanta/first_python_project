@@ -61,7 +61,7 @@ The win logic is driven by a lookup dictionary instead of a chain of `if/elif` s
 beats = {1: -1, -1: 0, 0: 1}  # key beats value
 ```
 
-Each entry encodes one rule (e.g. `1: -1` means snake beats water). A result is checked with a single lookup — `beats[computer] == you` — rather than six separate hand-written comparisons for every possible matchup. 
+Each entry encodes one rule (e.g. `1: -1` means snake beats water). A result is checked with a single lookup — `beats[computer] == you` — rather than six separate hand-written comparisons for every possible matchup.
 
 ### Features
 
@@ -96,20 +96,20 @@ Python 3, standard library only (`random`). No external dependencies.
 
 ---
 
-# Terminal Weather App 🌦️
+## 3. Terminal Weather App 🌦️
 
 A command-line tool that fetches real-time weather data for any city using the OpenWeatherMap API.
 
-## How it works
+### How it works
 
 The script communicates with an external REST API, parses the JSON response, and renders a stylized dashboard in the terminal.
 
-- **API Integration:** Uses the `requests` library to securely pass parameters and handle potential network timeouts or bad status codes.
+- **API Integration:** Uses the `requests` library to pass parameters and handle network timeouts or bad status codes.
 - **Environment Variables:** Keeps the private API key secure by loading it from a local `.env` file via `python-dotenv` instead of hardcoding it.
-- **Rich UI:** Leverages the `rich` library to replace standard prints with colorful, formatted panels and text tags (e.g., `[bold cyan]`).
-- **CLI Arguments:** Uses `sys.argv` to allow users to pass the city directly in the execution command, falling back to an `input()` prompt if omitted.
+- **Rich UI:** Uses the `rich` library for colorful, formatted panels instead of plain prints.
+- **CLI Arguments:** Uses `sys.argv` to allow passing the city directly on the command line, falling back to an `input()` prompt if omitted.
 
-## Usage
+### Usage
 
 ```bash
 python weather_app.py Tokyo
@@ -119,7 +119,7 @@ python weather_app.py Tokyo
 python weather_app.py
 ```
 
-## Example
+### Example
 
 ```text
 $ python weather_app.py London
@@ -135,19 +135,62 @@ Fetching weather data for London...
 ╰────────────────────────────────────────────────────────────╯
 ```
 
-## Requirements
+### Requirements
 
 - Python 3.6+
-- External dependencies: `requests`, `python-dotenv`, and `rich`
+- External dependencies: `requests`, `python-dotenv`, `rich`
 
-Install via:
+Requires a free OpenWeatherMap API key saved in a local `.env` file:
+
+```env
+WEATHER_API_KEY=your_api_key_here
+```
+
+---
+
+## 4. YouTube Video Downloader
+
+A command-line tool that downloads a single YouTube video at the best available quality using `yt-dlp`.
+
+### How it works
+
+- **Best quality download:** uses `'bestvideo+bestaudio/best'` instead of a pre-merged `'best'` format, so it isn't capped at ~720p. Requires `ffmpeg` installed on your system to merge the separate video and audio streams.
+- **Playlist rejection:** YouTube playlist links have a `list` parameter but no `v` (single video) parameter. This tool explicitly detects and rejects bare playlist URLs before attempting any download — yt-dlp's built-in `noplaylist` option only prevents downloading a playlist when a URL contains *both* a video and a playlist ID together, so it does not by itself stop a bare playlist link from downloading every item in the playlist.
+- **URL validation:** rejects anything that isn't a recognizable `youtube.com` or `youtu.be` link before calling yt-dlp at all.
+- **Error handling:** cleanly catches invalid URLs, unavailable videos, age-restricted videos requiring sign-in, and network failures, instead of crashing with a raw traceback.
+
+### Usage
+
+```bash
+python YouTube_video_downloader.py
+```
+
+Downloaded files are saved into a `downloads/` folder (not tracked in this repo).
+
+### Example
+
+```
+$ python YouTube_video_downloader.py
+
+🎥 YouTube Video Downloader
+
+Enter the YouTube Video URL: https://youtu.be/dQw4w9WgXcQ
+
+⏳ Fetching video information and starting download...
+[download] Destination: downloads/Rick Astley - Never Gonna Give You Up.mp4
+[download] 100% of 62.43MiB in 00:01
+
+✅ Download completed successfully!
+```
+
+### Requirements
+
+- Python 3.6+
+- External dependencies: `yt-dlp`, `rich`
+- **`ffmpeg` must be installed separately** (not a pip package) — required to merge the best available video and audio streams. Install via your OS package manager (e.g. `choco install ffmpeg`, `brew install ffmpeg`, or `apt install ffmpeg`).
+
+Install Python dependencies via:
 
 ```bash
 pip install -r requirements.txt
-```
-
-> **Note:** Requires a free OpenWeatherMap API key saved in a local `.env` file.
-
-```env
-API_KEY=your_api_key_here
 ```
